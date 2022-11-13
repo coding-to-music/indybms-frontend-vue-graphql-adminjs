@@ -11,9 +11,10 @@
     "pinia": "^2.0.23",
     "vue": "^3.2.41",
     "vue-router": "^4.1.5",
-    "vuesax": "^4.0.1-alpha.25"
+    "vuetify": "3.0.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^6.2.0",
     "@vitejs/plugin-vue": "^3.1.2",
     "chalk": "4.1.2",
     "vite": "^3.1.8"

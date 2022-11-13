@@ -1,6 +1,6 @@
 # IndyBMS Frontend
 
-Made using Vue 3 and [Vuesax](https://vuesax.com/docs/components/#default)
+Made using Vue 3 and [Vuetify](https://next.vuetifyjs.com/en/components/all/)
 
 ## Pre-Requisites
 1. Install Node.js 16.x or above
