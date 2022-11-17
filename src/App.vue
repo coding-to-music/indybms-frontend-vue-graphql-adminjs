@@ -6,19 +6,21 @@ import { RouterView } from 'vue-router'
   <v-app>
     <v-app-bar title="IndyBMS" absolute color="primary">
       <template v-slot:prepend>
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-btn icon="fa:fas fa-ticket" to="/"></v-btn>
       </template>
       <template v-slot:append>
         <v-btn icon="fa:fas fa-search"></v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Sign In</v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Register</v-btn>
       </template>
     </v-app-bar>
     <v-main>
       <RouterView />
     </v-main>
-    <v-footer absolute app  class="bg-primary">
+    <v-footer absolute app class="bg-primary">
       <v-row justify="center" no-gutters>
-        <v-btn v-for="link in links" :key="link" color="white" variant="text" class="mx-2" rounded="xl">
-          {{ link }}
+        <v-btn v-for="link in links" :key="link" :to="link.path" color="white" variant="text" class="mx-2" rounded="xl">
+          {{ link.title }}
         </v-btn>
         <v-col class="text-center mt-4" cols="12">
           &copy; {{ new Date().getFullYear() }} — <strong>IndyBMS</strong>
@@ -36,12 +38,12 @@ import { RouterView } from 'vue-router'
 export default {
   data: () => ({
     links: [
-      'Home',
-      'About Us',
-      'Team',
-      'Services',
-      'Blog',
-      'Contact Us',
+      {title:'Home', path:"/"},
+      {title:'About Us', path:"/login"},
+      {title:'Team', path:"/login"},
+      {title:'Services', path:"/login"},
+      {title:'Blog', path:"/login"},
+      {title:'Contact Us', path:"/login"},
     ],
   }),
 }
