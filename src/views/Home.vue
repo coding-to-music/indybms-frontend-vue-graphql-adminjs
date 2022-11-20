@@ -11,7 +11,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="4" :lg="12 / categories.length" v-for="(category, i) in categories" :key="i" rounded="xl">
-          <Card :id="i" :name="category.name" :srcImg="category.src" />
+          <Card :id="i" :name="category.name" :srcImg="category.src"/>
         </v-col>
       </v-row>
     </v-container>

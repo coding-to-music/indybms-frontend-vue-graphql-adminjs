@@ -1,88 +1,50 @@
 <template>
-  <div class="py-16">
-    <v-card class="mx-auto" width="40rem">
-        <v-toolbar dark color="primary">
-        <v-toolbar-title>{{isRegister ? stateObj.register.name : stateObj.login.name}} Form</v-toolbar-title>
-        </v-toolbar>
+    <div class="py-16">
+        <v-card class="mx-auto my-16" width="40rem">
+            <v-toolbar dark color="primary">
+                <v-toolbar-title>Login form</v-toolbar-title>
+          </v-toolbar>
         <v-card-text>
-        <form ref="form" @submit.prevent="isRegister ? register() : login()">
-            <v-text-field
-                v-model="username"
-                name="username"
-                label="Username"
-                type="text"
-                placeholder="Username"
-                required
-            ></v-text-field>
-            
-            <v-text-field
-                v-model="password"
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="Password"
-                required
-            ></v-text-field>
-
-            <v-text-field v-if="isRegister"
-                v-model="confirmPassword"
-                name="confirmPassword"
-                label="Confirm Password"
-                type="password"
-                placeholder="Confirm Password"
-                required
-            ></v-text-field>
-            <div class="red--text"> {{errorMessage}}</div>
-            <v-btn type="submit" class="mt-4" color="primary" value="log in">{{isRegister ? stateObj.register.name : stateObj.login.name}}</v-btn>
-            <div class="grey--text mt-4" v-on:click="isRegister = !isRegister;">
-                {{toggleMessage}}  
-            </div>
-        </form>
+            <v-form ref="loginForm" v-model="valid" lazy-validation>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field variant="outlined" v-model="username" :rules="[rules.required]" label="Mobile/Email"></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field variant="outlined" v-model="password"  :rules="[rules.required]" type="password" name="input-password" label="Password"></v-text-field>
+                    </v-col>
+                    <v-spacer></v-spacer>
+                    <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
+                        <v-btn x-large block color="primary" @click="validate">Login</v-btn>
+                    </v-col>
+                </v-row>
+            </v-form>
         </v-card-text>
     </v-card>
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
-  name: "register",
-  data() {
-    return {
-      username: "",
-      password: "",
-      confirmPassword: "",
-      isRegister : false,
-      errorMessage: "",
-      stateObj: {
-         register :{
-            name: 'Register',
-            message: 'Aleady have an Acoount? Login'
-         },
-         login : {
-            name: 'Login',
-            message: 'Don\'t have an account ? Register'
-         }
-      }
-    };
-  },
+  name: "login",
   methods: {
-    login() {
-      
+    validate() {
+        this.$refs.loginForm.validate()
+    //   if (this.$refs.loginForm.validate()) {
+    //     // submit form to server/API here...
+    //   }
     },
-    register() {
-       if(this.password == this.confirmPassword){
-          this.isRegister = false;
-          this.errorMessage = "";
-          this.$refs.form.reset();
-       }
-       else {
-         this.errorMessage = "Password did not match"
-       }
-    }
   },
-  computed: {
-    toggleMessage : function() { 
-      return this.isRegister ? this.stateObj.register.message : this.stateObj.login.message }
-  }
+  data: () => ({
+    valid: true,
+    username:"",
+    password: "",
+    rules: {
+      required: value => !!value || "Required.",
+    }
+  })
 };
 </script>
+
+<style>
+</style>

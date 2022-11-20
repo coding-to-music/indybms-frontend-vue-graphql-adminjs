@@ -10,8 +10,8 @@ import { RouterView } from 'vue-router'
       </template>
       <template v-slot:append>
         <v-btn icon="fa:fas fa-search"></v-btn>
-        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Sign In</v-btn>
-        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Register</v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Login</v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/signup">Sign Up</v-btn>
       </template>
     </v-app-bar>
     <v-main>
@@ -38,7 +38,6 @@ import { RouterView } from 'vue-router'
 export default {
   data: () => ({
     links: [
-      {title:'Home', path:"/"},
       {title:'About Us', path:"/login"},
       {title:'Team', path:"/login"},
       {title:'Services', path:"/login"},
