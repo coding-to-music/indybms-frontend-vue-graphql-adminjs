@@ -38,11 +38,11 @@ import { RouterView } from 'vue-router'
 export default {
   data: () => ({
     links: [
-      {title:'About Us', path:"/login"},
-      {title:'Team', path:"/login"},
-      {title:'Services', path:"/login"},
-      {title:'Blog', path:"/login"},
-      {title:'Contact Us', path:"/login"},
+      { title: 'About Us', path: "/login" },
+      { title: 'Team', path: "/login" },
+      { title: 'Services', path: "/login" },
+      { title: 'Blog', path: "/login" },
+      { title: 'Contact Us', path: "/login" },
     ],
   }),
 }
