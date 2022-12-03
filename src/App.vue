@@ -1,5 +1,18 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { createClient, provideClient } from '@urql/vue';
+
+const client = createClient({
+  // url: import.meta.env.BACKEND_URL,
+  url: 'https://api.ryandsilva.dev/graphql',
+  fetchOptions: () => {
+    const token = '';
+    return {
+      headers: { Authorization: token ? `Bearer ${token}` : '' },
+    };
+  },
+});
+provideClient(client);
 </script>
 
 <template>
@@ -11,7 +24,7 @@ import { RouterView } from 'vue-router'
       <template v-slot:append>
         <v-btn icon="fa:fas fa-search"></v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/login">Login</v-btn>
-        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/signup">Sign Up</v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" size="large" to="/register">Sign Up</v-btn>
       </template>
     </v-app-bar>
     <v-main>
@@ -38,11 +51,11 @@ import { RouterView } from 'vue-router'
 export default {
   data: () => ({
     links: [
-      { title: 'About Us', path: "/login" },
-      { title: 'Team', path: "/login" },
-      { title: 'Services', path: "/login" },
-      { title: 'Blog', path: "/login" },
-      { title: 'Contact Us', path: "/login" },
+      { title: 'About Us', path: "/#" },
+      { title: 'Team', path: "/#" },
+      { title: 'Services', path: "/#" },
+      { title: 'Blog', path: "/#" },
+      { title: 'Contact Us', path: "/#" },
     ],
   }),
 }

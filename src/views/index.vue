@@ -1,7 +1,3 @@
-<script setup>
-
-</script>
-
 <template>
   <div>
     <v-carousel cycle>
@@ -11,7 +7,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="4" :lg="12 / categories.length" v-for="(category, i) in categories" :key="i" rounded="xl">
-          <Card :id="i" :name="category.name" :srcImg="category.src" />
+          <Card id="d" :name="category.name" :srcImg="category.src" />
         </v-col>
       </v-row>
     </v-container>
@@ -25,8 +21,8 @@
 </template>
 
 <script>
-import SearchBar from '../components/SearchBar.vue'
-import Card from '../components/Card.vue'
+import SearchBar from '../components/search_bar.vue'
+import Card from '../components/card.vue'
 
 export default {
   name: 'home',

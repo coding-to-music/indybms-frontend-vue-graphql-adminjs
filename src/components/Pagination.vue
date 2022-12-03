@@ -2,23 +2,19 @@
 </script>
 
 <template>
-    <div>
-      <v-container>
-        <v-row class="py-6">
-            <v-col cols="12" md="4" :lg="3" v-for="(event, i) in events" :key="i">
-            <Card :name="event.name" :srcImg="event.src" />
-            </v-col>
-        </v-row>
-      </v-container>
-      <v-pagination
-        v-model="currentPage"
-        :length="totalPages"
-        @input="handlePageChange"
-      ></v-pagination>
-    </div>
+  <div>
+    <v-container>
+      <v-row class="py-6">
+        <v-col cols="12" md="4" :lg="3" v-for="(event, i) in events" :key="i">
+          <Card :name="event.name" :srcImg="event.src" />
+        </v-col>
+      </v-row>
+    </v-container>
+    <v-pagination v-model="currentPage" :length="totalPages" @input="handlePageChange"></v-pagination>
+  </div>
 </template>
 <script>
-import Card from '../components/Card.vue'
+import Card from './card.vue'
 
 export default {
   name: 'pagination',
@@ -66,11 +62,13 @@ export default {
     totalPages: 6,
   }),
   methods: {
-      handlePageChange(value) {
-        this.currentPage = value;
-      }
+    handlePageChange(value) {
+      this.currentPage = value;
     }
+  }
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

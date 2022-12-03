@@ -1,6 +1,3 @@
-<script setup>
-
-</script>
 <template>
   <div class="py-16">
     <v-card class="mx-auto my-16" width="60rem">
