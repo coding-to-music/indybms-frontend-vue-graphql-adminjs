@@ -58,14 +58,9 @@
 <script setup>
 import { useCategoryStore } from "../../stores/category";
 import { useEventStore } from "../../stores/event";
-import { useUserStore } from "../../stores/user";
 const categoryStore = useCategoryStore();
 const eventStore = useEventStore();
-const userStore = useUserStore();
 categoryStore.getAllCategories();
-if (userStore.token) {
-  userStore.getUser(userStore.id)
-}
 eventStore.prepareMutation()
 </script>
 

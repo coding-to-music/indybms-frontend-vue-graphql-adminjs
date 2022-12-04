@@ -10,6 +10,7 @@ export const useEventStore = defineStore({
     isFetching: false,
     error: null,
     mutationObj: null,
+    event: null,
   }),
   getters: {},
   actions: {
@@ -28,6 +29,40 @@ export const useEventStore = defineStore({
       const { data, error } = await executeQuery(query, {});
       this.error = error;
       this.events = data.allEvents;
+      this.isFetching = false;
+    },
+    async getEvent(id) {
+      this.isFetching = true;
+      const query = `
+      query($id: String!) {
+        event(id: $id) {
+          id
+          title
+          description
+          date
+          location
+          coverImage
+          gallery
+          ageRestriction
+          maxAllowedRegistrations
+          status
+          category {
+            name
+          }
+          registrationFee
+          owner {
+            name
+            email
+            phone
+          }
+          createdAt
+          updatedAt
+        }
+      }
+      `;
+      const { data, error } = await executeQuery(query, { id: id });
+      this.error = error;
+      this.event = data.event;
       this.isFetching = false;
     },
     async searchEvents(term) {
@@ -88,6 +123,20 @@ export const useEventStore = defineStore({
       const mutationObj = useMutation(mutation);
       this.mutationObj = mutationObj;
     },
+    prepareEditMutation() {
+      const mutation = `
+      mutation($id: String!, $title: String, $description: String, $date: String, $location: String!, $coverImage: String, $gallery: [String], $ageRestriction: Boolean, $maxAllowedRegistrations: Int, $category: String, $registrationFee: Float, $status: String) {
+        updateEvent(event: { id: $id, title: $title, description: $description, date: $date, location: $location, coverImage: $coverImage, gallery: $gallery, ageRestriction: $ageRestriction, maxAllowedRegistrations: $maxAllowedRegistrations, category: $category, registrationFee: $registrationFee, status: $status }) {
+            id
+            title
+            createdAt
+            updatedAt
+        }
+    }
+      `;
+      const mutationObj = useMutation(mutation);
+      this.mutationObj = mutationObj;
+    },
     async createEvent(event) {
       this.isFetching = true;
       const { data, error } = await executeMutation(this.mutationObj, {
@@ -102,7 +151,24 @@ export const useEventStore = defineStore({
         category: event.category,
         registrationFee: event.registrationFee,
       });
-      console.log(data);
+      this.error = error;
+      this.isFetching = false;
+      this.router.push("/");
+    },
+    async editEvent(event) {
+      this.isFetching = true;
+      const { data, error } = await executeMutation(this.mutationObj, {
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        date: event.date,
+        location: event.location,
+        ageRestriction: event.ageRestriction,
+        maxAllowedRegistrations: event.maxAllowedRegistrations,
+        category: event.category,
+        registrationFee: event.registrationFee,
+        status: event.status,
+      });
       this.error = error;
       this.isFetching = false;
       this.router.push("/");

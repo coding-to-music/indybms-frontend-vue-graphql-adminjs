@@ -7,6 +7,7 @@ import search_list from "../views/search_list.vue";
 import category_list from "../views/category_list.vue";
 import register_for_event from "../views/events/register_for_event.vue";
 import add_event from "../views/events/add_event.vue";
+import edit_event from "../views/events/edit_event.vue";
 import event_details from "../views/events/event_details.vue";
 
 import { useUserStore } from "../stores/user";
@@ -39,6 +40,12 @@ const router = createRouter({
       path: "/events/:id/register",
       name: "register_for_event",
       component: register_for_event,
+    },
+    {
+      path: "/events/:id/edit",
+      name: "edit_event",
+      component: edit_event,
+      meta: { requiresAuth: true },
     },
     {
       path: "/events/add",
