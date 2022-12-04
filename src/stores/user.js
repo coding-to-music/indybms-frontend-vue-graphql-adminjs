@@ -51,6 +51,7 @@ export const useUserStore = defineStore({
           createdEvents {
             id
             title
+            coverImage
             date
           }
         }

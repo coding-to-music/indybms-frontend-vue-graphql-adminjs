@@ -40,9 +40,9 @@ export default {
       let in_progress = [];
       let completed = [];
       this.userStore.getAllUserEvents.forEach((e) => {
-        if (moment(e.date).isBefore(Date.now(), 'day')) {
+        if (moment(parseInt(e.date)).isBefore(moment(), 'day')) {
           completed.push(e)
-        } else if (moment(e.date).isSame(Date.now(), 'day')) {
+        } else if (moment(parseInt(e.date)).isSame(moment(), 'day')) {
           in_progress.push(e)
         } else {
           upcoming.push(e)

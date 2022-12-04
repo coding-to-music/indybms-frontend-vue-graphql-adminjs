@@ -14,7 +14,8 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn :disabled="!isFormValid" class="mx-2 mb-4" variant="flat" size="large" color="indigo" @click.prevent="userStore.loginUser(email, password)">Login</v-btn>
+            <v-btn :disabled="!isFormValid" class="mx-2 mb-4" variant="flat" size="large" color="indigo"
+              @click.prevent="userStore.loginUser(email, password)">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>

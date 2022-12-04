@@ -6,7 +6,8 @@
     <SearchBar />
     <v-row class="mx-4 mb-2">
       <v-col class="mx-2" cols="12" md="4" :lg="2" v-for="(category, i) in categoryStore.categories" :key="i">
-        <CategoryCard :id="category.id" :name="category.name" :srcImg="category.image" />
+        <CategoryCard :id="category.id" :name="category.name" :srcImg="category.image"
+          :url="'/categories/' + category.id" />
       </v-col>
     </v-row>
     <v-row v-if="userStore.user && userStore.user.privilege !== 'USER'" class="mx-4 my-4 text-center">
@@ -59,7 +60,3 @@ export default {
   }),
 }
 </script>
-
-<style scoped>
-
-</style>

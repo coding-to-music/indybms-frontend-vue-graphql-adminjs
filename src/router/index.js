@@ -4,6 +4,8 @@ import events from "../views/events/events.vue";
 import my_events from "../views/user/my_events.vue";
 import login from "../views/login.vue";
 import register from "../views/register.vue";
+import search_list from "../views/search_list.vue";
+import category_list from "../views/category_list.vue";
 import register_for_event from "../views/events/register_for_event.vue";
 import add_event from "../views/events/add_event.vue";
 import event_details from "../views/events/event_details.vue";
@@ -50,6 +52,17 @@ const router = createRouter({
       path: "/events/:id",
       name: "event_details",
       component: event_details,
+    },
+    {
+      path: "/find",
+      name: "find_events",
+      component: search_list,
+      props: (route) => ({ searchTerm: route.query.searchTerm }),
+    },
+    {
+      path: "/categories/:categoryId",
+      name: "category_events",
+      component: category_list,
     },
   ],
 });

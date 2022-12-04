@@ -5,10 +5,15 @@ export const useCategoryStore = defineStore({
   id: "category",
   state: () => ({
     categories: [],
+    currentCategory: null,
+    categoryEvents: [],
     isFetching: false,
     error: null,
   }),
-  getters: {},
+  getters: {
+    getCurrentCategory: (state) =>
+      state.categories.find((c) => c.id == state.currentCategory),
+  },
   actions: {
     async getAllCategories() {
       this.isFetching = true;
@@ -24,6 +29,24 @@ export const useCategoryStore = defineStore({
       const { data, error } = await executeQuery(query, {});
       this.error = error;
       this.categories = data.allCategories;
+      this.isFetching = false;
+    },
+    async getCategoryEvents(id) {
+      this.isFetching = true;
+      const query = `
+      query($categoryId: String!) {
+        categoryEvents(categoryId: $categoryId) {
+          id
+          title
+          coverImage
+          status
+        }
+      }
+      `;
+      const { data, error } = await executeQuery(query, { categoryId: id });
+      this.error = error;
+      this.categoryEvents = data.categoryEvents;
+      this.currentCategory = id;
       this.isFetching = false;
     },
   },
