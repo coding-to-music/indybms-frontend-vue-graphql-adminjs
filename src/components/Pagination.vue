@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
   <div>
     <v-container>
@@ -14,7 +11,7 @@
   </div>
 </template>
 <script>
-import Card from './card.vue'
+import Card from './category_card.vue'
 
 export default {
   name: 'pagination',

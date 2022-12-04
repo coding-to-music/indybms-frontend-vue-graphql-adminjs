@@ -1,29 +1,21 @@
 <template>
-  <div>
-    <v-card-text class="pt-8 w-50 mx-auto">
-      <v-text-field class="w-auto" :loading="loading" density="compact" variant="solo"
-        label="Start searching for your favourite events" append-inner-icon="fa:fas fa-search" single-line hide-details
-        @click:append-inner="onClick">
-      </v-text-field>
-    </v-card-text>
-  </div>
+  <v-row class="mx-4 my-4" justify="center">
+    <v-col cols="12" md="6">
+      <v-text-field v-model="searchTerm" clearable label="Search for your favourite events" variant="solo"
+        append-inner-icon="fa:fas fa-search" @click:append-inner="search"></v-text-field>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 export default {
   name: 'searchbar',
   data: () => ({
-    loaded: false,
-    loading: false,
+    searchTerm: '',
   }),
   methods: {
-    onClick() {
-      this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-        this.loaded = true
-      }, 2000)
+    search() {
+      console.log(this.searchTerm);
     },
   },
 }

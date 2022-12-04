@@ -4,20 +4,19 @@
       <v-carousel-item v-for="(event, i) in events" :key="i" :src="event.src" cover></v-carousel-item>
     </v-carousel>
     <SearchBar />
-    <v-container>
-      <v-row>
-        <v-col cols="12" md="4" :lg="12 / categoryStore.categories.length"
-          v-for="(category, i) in categoryStore.categories" :key="i" rounded="xl">
-          <Card :id="category.id" :name="category.name" :srcImg="category.image" />
-        </v-col>
-      </v-row>
-    </v-container>
-    <v-card-actions class="justify-center pb-8 mx-auto">
-      <v-btn color="primary" prepend-icon="fa:fas fa-plus" append-icon="fa:fas fa-arrow-right" variant="tonal"
-        size="small">
-        Add your own event
-      </v-btn>
-    </v-card-actions>
+    <v-row class="mx-4">
+      <v-col class="mx-2" cols="12" md="4" :lg="2" v-for="(category, i) in categoryStore.categories" :key="i">
+        <CategoryCard :id="category.id" :name="category.name" :srcImg="category.image" />
+      </v-col>
+    </v-row>
+    <v-row class="mx-4 my-4 text-center">
+      <v-col cols="12">
+        <v-btn color="indigo" append-icon="fa:fas fa-arrow-right" variant="flat" size="large" to="/events/add">
+          Add Your Own Event
+        </v-btn>
+      </v-col>
+    </v-row>
+
   </div>
 </template>
 
@@ -29,13 +28,13 @@ categoryStore.getAllCategories();
 
 <script>
 import SearchBar from '../components/search_bar.vue'
-import Card from '../components/card.vue'
+import CategoryCard from '../components/category_card.vue'
 
 export default {
   name: 'home',
   components: {
     SearchBar,
-    Card,
+    CategoryCard,
   },
   data: () => ({
     events: [
@@ -50,34 +49,6 @@ export default {
       },
       {
         src: 'https://cdn.vuetifyjs.com/images/cards/sunshine.jpg',
-      },
-    ],
-    loaded: false,
-    loading: false,
-    categories: [
-      {
-        name: "Movies",
-        src: "https://picsum.photos/500/300?image=1"
-      },
-      {
-        name: "Music",
-        src: "https://picsum.photos/500/300?image=2"
-      },
-      {
-        name: "Sports",
-        src: "https://picsum.photos/500/300?image=3"
-      },
-      {
-        name: "Arts",
-        src: "https://picsum.photos/500/300?image=4"
-      },
-      {
-        name: "Exhibition",
-        src: "https://picsum.photos/500/300?image=3"
-      },
-      {
-        name: "Career Fair",
-        src: "https://picsum.photos/500/300?image=4"
       },
     ],
   }),
