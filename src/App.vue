@@ -1,5 +1,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { useUserStore } from "./stores/user";
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -9,8 +11,15 @@ import { RouterView } from 'vue-router'
         <v-app-bar-title>IndyBMS</v-app-bar-title>
       </v-btn>
       <template v-slot:append>
-        <v-btn color="white" variant="plain" class="mx-4" size="medium" to="/login">Login</v-btn>
-        <v-btn color="white" variant="plain" class="mx-2 ml-4" size="medium" to="/register">Register</v-btn>
+        <span v-if="!userStore.user">
+          <v-btn color="white" variant="plain" class="mx-4" size="medium" to="/login">Login</v-btn>
+          <v-btn color="white" variant="plain" class="mx-2 ml-4" size="medium" to="/register">Register</v-btn></span>
+        <span v-if="userStore.user">
+          <v-btn color="white" variant="plain" class="mx-4" size="medium" :to="'/' + userStore.id + '/events'">Hi, {{
+              userStore.user.name
+          }}</v-btn>
+          <v-btn color="white" variant="plain" class="mx-2 ml-4" size="medium"
+            @click.prevent="userStore.logoutUser">Logout</v-btn></span>
       </template>
     </v-app-bar>
     <v-main>
@@ -28,10 +37,6 @@ import { RouterView } from 'vue-router'
     </v-footer>
   </v-app>
 </template>
-
-<style scoped>
-
-</style>
 
 <script>
 export default {

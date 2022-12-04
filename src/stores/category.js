@@ -5,7 +5,7 @@ export const useCategoryStore = defineStore({
   id: "category",
   state: () => ({
     categories: [],
-    isFetching: null,
+    isFetching: false,
     error: null,
   }),
   getters: {},

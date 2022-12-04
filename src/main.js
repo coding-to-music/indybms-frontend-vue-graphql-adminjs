@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
 import { createPinia } from "pinia";
 import urql from "@urql/vue";
 
@@ -15,6 +15,9 @@ import * as directives from "vuetify/directives";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 const pinia = createPinia();
+pinia.use(({ store }) => {
+  store.router = markRaw(router);
+});
 
 const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -38,9 +41,9 @@ app.use(pinia);
 app.use(vuetify);
 app.use(router);
 app.use(urql, {
-  url: backendURL,
+  url: `${backendURL}/graphql`,
   fetchOptions: () => {
-    const token = "";
+    const token = localStorage.getItem("indybms-token");
     return {
       headers: { Authorization: token ? `Bearer ${token}` : "" },
     };

@@ -1,79 +1,62 @@
 <template>
-  <div class="py-16">
-    <v-card class="mx-auto my-16" width="40rem">
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>Create an Account</v-toolbar-title>
-      </v-toolbar>
-      <v-card-text>
-        <v-form ref="signupForm" v-model="valid" lazy-validation>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field v-model="name" :rules="[rules.required]" label="Name" maxlength="20"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="mobile" :rules="mobileRules" label="Mobile"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="email" :rules="emailRules" label="Email"></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field v-model="password" :rules="[rules.required, rules.min]" type="password"
-                name="input-password" label="Password" hint="At least 8 characters"></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field block v-model="verify" :rules="[rules.required, passwordMatch]" type="password"
-                name="input-password" label="Confirm Password"></v-text-field>
-            </v-col>
+  <v-container class="py-16" fill-height fluid>
+    <v-row justify="center">
+      <v-col cols="12" md="6">
+        <v-card flat>
+          <v-card-title class="font-weight-bold my-2 text-center">Register</v-card-title>
+          <v-card-text>
+            <v-form v-model="isFormValid" class="my-4">
+              <v-text-field :rules="nameRules" outline label="Name" type="text" v-model="name" required></v-text-field>
+              <v-text-field :rules="phoneRules" outline label="Phone Number" type="text" v-model="phone"
+                required></v-text-field>
+              <v-text-field :rules="emailRules" outline label="Email Address" type="email" v-model="email"
+                required></v-text-field>
+              <v-text-field :rules="passwordRules" outline hide-details label="Password" type="password"
+                v-model="password" required></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
             <v-spacer></v-spacer>
-            <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-              <v-btn x-large block color="primary" @click="validate">Sign Up</v-btn>
-            </v-col>
-          </v-row>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </div>
+            <v-btn :disabled="!isFormValid" class="mx-2 mb-4" variant="flat" size="large" color="indigo"
+              @click.prevent="userStore.registerUser(name, phone, email, password)">Register</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+
+  </v-container>
 </template>
+
+<script setup>
+import { useUserStore } from "../stores/user";
+const userStore = useUserStore();
+</script>
 
 <script>
 export default {
-  name: 'register',
-  computed: {
-    passwordMatch() {
-      return () => this.password === this.verify || "Password must match";
-    }
-  },
-  methods: {
-    validate() {
-      this.$refs.signupForm.validate()
-      //   if (this.$refs.registerForm.validate()) {
-      //     // submit form to server/API here...
-      //   }
-    },
-  },
+  name: "register",
   data: () => ({
-    valid: true,
+    isFormValid: false,
     name: "",
-    mobile: "",
+    phone: "",
     email: "",
     password: "",
-    verify: "",
-    mobileRules: [
-      v => !!v || "Required",
-      v => (v && !isNaN(parseFloat(v)) && v.length == 10) || "Mobile must be valid"
-    ],
     emailRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      v => !!v || 'E-mail is required',
+      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
     ],
-    rules: {
-      required: value => !!value || "Required.",
-      min: v => (v && v.length >= 8) || "Min 8 characters"
-    }
+    passwordRules: [
+      v => !!v || 'Password is required',
+      v => (v && v.length >= 6) || 'Password must be more than 6 characters',
+    ],
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => (v && v.length >= 3) || 'Name must be more than 2 characters',
+    ],
+    phoneRules: [
+      v => !!v || 'Phone Number is required',
+      v => (v && v.length == 10) || 'Phone Number must be exactly 10 characters',
+    ],
   })
-}
+};
 </script>
-
-<style scoped>
-
-</style>

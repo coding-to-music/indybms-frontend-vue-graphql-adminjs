@@ -11,7 +11,7 @@
 
 <script>
 import SearchBar from '../../components/search_bar.vue'
-import Pagination from '../../components/pagination.vue'
+import Pagination from '../../components/event_list_view.vue'
 export default {
   name: 'events',
   components: {
