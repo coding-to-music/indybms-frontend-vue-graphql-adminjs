@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from "@urql/vue";
+import { useQuery } from "@urql/vue";
 
 const executeQuery = async (query, variables) => {
   try {
@@ -18,11 +18,8 @@ const executeQuery = async (query, variables) => {
   }
 };
 
-const executeMutation = async (mutation, variables) => {
+const executeMutation = async (mutationObj, variables) => {
   try {
-    const mutationObj = useMutation({
-      mutation: mutation,
-    });
     const result = await mutationObj.executeMutation(variables);
     return {
       data: result.data.value,

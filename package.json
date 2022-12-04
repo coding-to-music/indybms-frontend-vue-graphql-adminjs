@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@urql/vue": "^1.0.2",
+    "@vuepic/vue-datepicker": "^3.6.0",
     "@vueuse/core": "^9.6.0",
     "axios": "^1.2.0",
     "graphql": "^16.6.0",
@@ -16,13 +17,14 @@
     "pinia": "^2.0.23",
     "vue": "^3.2.41",
     "vue-router": "^4.1.5",
-    "vuetify": "3.0.1"
+    "vuetify": "3.0.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@types/node": "^18.11.10",
     "@vitejs/plugin-vue": "^3.1.2",
     "chalk": "4.1.2",
+    "sass": "^1.56.1",
     "vite": "^3.1.8"
   }
 }

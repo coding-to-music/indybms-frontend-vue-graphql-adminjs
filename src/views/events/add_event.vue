@@ -1,46 +1,52 @@
 <template>
-  <div class="py-16">
-    <v-card class="mx-auto my-16" width="60rem">
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>Add Event</v-toolbar-title>
-      </v-toolbar>
+  <div>
+    <v-card variant="flat" class="w-full mx-4 my-4">
+      <v-card-title class="font-weight-bold my-2 text-center">Add Event</v-card-title>
       <v-card-text>
-        <v-form ref="addeventForm" v-model="valid" lazy-validation>
+        <v-form v-model="isFormValid">
           <v-row>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="title" :rules="[rules.required]" label="Title"
-                maxlength="25"></v-text-field>
+              <v-text-field variant="outlined" v-model="title" label="Event Title"
+                :rules="[rules.required]"></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="maximumregistrations" :rules="[rules.required]"
-                label="Maximum Registrations"></v-text-field>
+              <v-text-field variant="outlined" min="1" v-model="maxAllowedRegistrations"
+                label="Maximum Allowed Registrations" type="number"
+                :rules="[rules.required, rules.minRegistrations]"></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="description" :rules="[rules.required]"
-                label="Description"></v-text-field>
+              <v-textarea rows="5" variant="outlined" v-model="description" label="Event Description"
+                :rules="[rules.required]"></v-textarea>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="agerestrictions" :rules="[rules.required]"
-                label="Age Restrictions"></v-text-field>
-            </v-col>
-            <v-checkbox label="ID Required"></v-checkbox>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="mobile" :rules="mobileRules" label="Mobile"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field variant="outlined" v-model="email" :rules="emailRules" label="Email"></v-text-field>
+              <Datepicker class="datepicker" v-model="date" placeholder="Event Date" format="dd-MMM-yyyy"
+                :enable-time-picker="false" :min-date="new Date()" input-class-name="dp-input" required />
+              <v-text-field variant="outlined" v-model="registrationFee" label="Registration Fee" type="number"
+                :rules="[rules.required]"></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" v-model="password" :rules="[rules.required, rules.min]" type="password"
-                name="input-password" label="Password" hint="At least 8 characters"></v-text-field>
+              <v-autocomplete v-model="category" label="Category" :items="categoryStore.categories" item-title="name"
+                item-value="id" return-object :rules="[rules.required]"></v-autocomplete>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field variant="outlined" block v-model="verify" :rules="[rules.required, passwordMatch]"
-                type="password" name="input-password" label="Confirm Password"></v-text-field>
+              <v-text-field variant="outlined" v-model="location" label="Location"
+                :rules="[rules.required]"></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-file-input show-size chips label="Cover Image" v-model="coverImageFile"
+                :rules="[rules.required]"></v-file-input>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-file-input show-size chips multiple label="Gallery" v-model="galleryFiles"
+                :rules="[rules.required]"></v-file-input>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-checkbox v-model="ageRestriction" label="ID Required"></v-checkbox>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-              <v-btn x-large block color="primary" @click="validate">Sign Up</v-btn>
+            <v-col class="d-block ml-auto my-3" cols="12" sm="3" xsm="12">
+              <v-btn size="large" :disabled="!isFormValid" x-large block color="indigo" @click.prevent="addEvent">Add
+                Event</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -50,37 +56,85 @@
 </template>
 
 <script setup>
+import { useCategoryStore } from "../../stores/category";
 import { useEventStore } from "../../stores/event";
+import { useUserStore } from "../../stores/user";
+const categoryStore = useCategoryStore();
 const eventStore = useEventStore();
+const userStore = useUserStore();
+categoryStore.getAllCategories();
+if (userStore.token) {
+  userStore.getUser(userStore.id)
+}
+eventStore.prepareMutation()
 </script>
 
 <script>
 export default {
   name: 'add_event',
   methods: {
-    validate() {
-      this.$refs.signupForm.validate()
+    async uploadCoverImage() {
+      let formData = new FormData();
+      formData.append('coverImage', this.coverImageFile[0], this.coverImageFile[0].name);
+      const result = await this.eventStore.uploadSingleImage(formData, this.userStore.token);
+      this.coverImage = result.data.url;
+    },
+    async uploadGalleryImages() {
+      let formData = new FormData();
+      for (let file of this.galleryFiles) {
+        formData.append("gallery", file, file.name);
+      }
+      const result = await this.eventStore.uploadMultipleImages(formData, this.userStore.token);
+      this.gallery = result.data.urls;
+    },
+    async addEvent() {
+      await this.uploadCoverImage();
+      await this.uploadGalleryImages();
+      let event = {
+        'title': this.title,
+        'description': this.description,
+        'date': this.date,
+        'location': this.location,
+        'coverImage': this.coverImage,
+        'gallery': this.gallery,
+        'ageRestriction': this.ageRestriction,
+        'maxAllowedRegistrations': parseInt(this.maxAllowedRegistrations.toString()),
+        'category': this.category.id,
+        'registrationFee': parseFloat(this.registrationFee.toString()),
+      }
+      await this.eventStore.createEvent(event)
     },
   },
   data: () => ({
-    valid: true,
-    name: "",
-    mobile: "",
-    email: "",
-    password: "",
-    verify: "",
-    mobileRules: [
-      v => !!v || "Required",
-      v => (v && !isNaN(parseFloat(v)) && v.length == 10) || "Mobile must be valid"
-    ],
-    emailRules: [
-      v => !!v || "Required",
-      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    ],
+    isFormValid: false,
+    isLoading: false,
+    title: "",
+    description: "",
+    date: "",
+    location: "",
+    coverImage: "",
+    coverImageFile: [],
+    gallery: [],
+    galleryFiles: [],
+    ageRestriction: false,
+    maxAllowedRegistrations: 1,
+    category: "",
+    registrationFee: 0.0,
     rules: {
-      required: value => !!value || "Required.",
-      min: v => (v && v.length >= 8) || "Min 8 characters"
-    }
-  })
+      required: value => !!value || "Required",
+      minRegistrations: value => !!value && value >= 1 || "Required and value should be 1 or more",
+    },
+  }),
 }
 </script>
+
+<style lang="scss">
+.datepicker {
+  margin-bottom: 2.5rem;
+}
+
+.dp-input {
+  line-height: 125%;
+  height: 3.25rem;
+}
+</style>

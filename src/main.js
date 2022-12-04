@@ -14,6 +14,9 @@ import * as directives from "vuetify/directives";
 
 import "@fortawesome/fontawesome-free/css/all.css";
 
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+
 const pinia = createPinia();
 pinia.use(({ store }) => {
   store.router = markRaw(router);
@@ -33,9 +36,10 @@ const vuetify = createVuetify({
   },
 });
 
-import "./assets/main.css";
+import "./assets/main.scss";
 
 const app = createApp(App);
+app.component("Datepicker", Datepicker);
 
 app.use(pinia);
 app.use(vuetify);
