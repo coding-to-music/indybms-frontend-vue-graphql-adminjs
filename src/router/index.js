@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import index from "../views/index.vue";
-import events from "../views/events/events.vue";
 import my_events from "../views/user/my_events.vue";
 import login from "../views/login.vue";
 import register from "../views/register.vue";
@@ -9,6 +8,8 @@ import category_list from "../views/category_list.vue";
 import register_for_event from "../views/events/register_for_event.vue";
 import add_event from "../views/events/add_event.vue";
 import event_details from "../views/events/event_details.vue";
+
+import { useUserStore } from "../stores/user";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,14 +20,10 @@ const router = createRouter({
       component: index,
     },
     {
-      path: "/events/all",
-      name: "all_events",
-      component: events,
-    },
-    {
       path: "/:userid/events",
       name: "my_events",
       component: my_events,
+      meta: { requiresAuth: true },
     },
     {
       path: "/login",
@@ -47,6 +44,7 @@ const router = createRouter({
       path: "/events/add",
       name: "add_event",
       component: add_event,
+      meta: { requiresAuth: true },
     },
     {
       path: "/events/:id",
@@ -65,6 +63,15 @@ const router = createRouter({
       component: category_list,
     },
   ],
+});
+
+router.beforeEach((to, from) => {
+  const userStore = useUserStore();
+  if (to.meta.requiresAuth && userStore.token == null) {
+    return {
+      path: "/",
+    };
+  }
 });
 
 export default router;

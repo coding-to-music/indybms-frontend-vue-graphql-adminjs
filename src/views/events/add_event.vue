@@ -49,20 +49,17 @@
   </div>
 </template>
 
+<script setup>
+import { useEventStore } from "../../stores/event";
+const eventStore = useEventStore();
+</script>
+
 <script>
 export default {
-  name: 'addevent',
-  computed: {
-    passwordMatch() {
-      return () => this.password === this.verify || "Password must match";
-    }
-  },
+  name: 'add_event',
   methods: {
     validate() {
       this.$refs.signupForm.validate()
-      //   if (this.$refs.registerForm.validate()) {
-      //     // submit form to server/API here...
-      //   }
     },
   },
   data: () => ({
@@ -87,7 +84,3 @@ export default {
   })
 }
 </script>
-
-<style scoped>
-
-</style>
