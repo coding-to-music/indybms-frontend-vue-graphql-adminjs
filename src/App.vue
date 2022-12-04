@@ -1,18 +1,5 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { createClient, provideClient } from '@urql/vue';
-
-const client = createClient({
-  // url: import.meta.env.BACKEND_URL,
-  url: 'https://api.ryandsilva.dev/graphql',
-  fetchOptions: () => {
-    const token = '';
-    return {
-      headers: { Authorization: token ? `Bearer ${token}` : '' },
-    };
-  },
-});
-provideClient(client);
 </script>
 
 <template>

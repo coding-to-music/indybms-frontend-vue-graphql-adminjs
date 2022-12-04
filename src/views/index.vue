@@ -6,8 +6,9 @@
     <SearchBar />
     <v-container>
       <v-row>
-        <v-col cols="12" md="4" :lg="12 / categories.length" v-for="(category, i) in categories" :key="i" rounded="xl">
-          <Card id="d" :name="category.name" :srcImg="category.src" />
+        <v-col cols="12" md="4" :lg="12 / categoryStore.categories.length"
+          v-for="(category, i) in categoryStore.categories" :key="i" rounded="xl">
+          <Card :id="category.id" :name="category.name" :srcImg="category.image" />
         </v-col>
       </v-row>
     </v-container>
@@ -19,6 +20,12 @@
     </v-card-actions>
   </div>
 </template>
+
+<script setup>
+import { useCategoryStore } from "../stores/category";
+const categoryStore = useCategoryStore();
+categoryStore.getAllCategories();
+</script>
 
 <script>
 import SearchBar from '../components/search_bar.vue'
