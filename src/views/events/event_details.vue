@@ -2,7 +2,7 @@
   <div v-if="eventStore.event" class="mx-4 my-4">
     <v-row>
       <v-col cols="12" md="4">
-        <v-img :src="eventStore.event.coverImage"></v-img>
+        <v-img :src="eventStore.event.coverImage" height="25rem" fit></v-img>
       </v-col>
       <v-col cols="12" md="6">
         <h1 class="text-h4">{{ eventStore.event.title }}</h1>

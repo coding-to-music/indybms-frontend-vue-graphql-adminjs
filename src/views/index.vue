@@ -4,7 +4,7 @@
       <v-carousel-item v-for="(event, i) in events" :key="i" :src="event.src" cover></v-carousel-item>
     </v-carousel>
     <SearchBar />
-    <v-row class="mx-4 mb-2">
+    <v-row class="mx-4 mb-2" justify="center">
       <v-col class="mx-2" cols="12" md="4" :lg="2" v-for="(category, i) in categoryStore.categories" :key="i">
         <CategoryCard :id="category.id" :name="category.name" :srcImg="category.image"
           :url="'/categories/' + category.id" />
@@ -45,16 +45,16 @@ export default {
   data: () => ({
     events: [
       {
-        src: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
+        src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2969&q=80',
       },
       {
-        src: 'https://cdn.vuetifyjs.com/images/cards/hotel.jpg',
+        src: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80',
       },
       {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+        src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
       },
       {
-        src: 'https://cdn.vuetifyjs.com/images/cards/sunshine.jpg',
+        src: 'https://images.unsplash.com/photo-1561489396-888724a1543d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80',
       },
     ],
   }),
