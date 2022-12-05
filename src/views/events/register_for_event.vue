@@ -1,62 +1,79 @@
 <template>
-  <div class="py-16">
-    <v-card class="mx-auto my-16" width="40rem">
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>Register for {{ event }}</v-toolbar-title>
-      </v-toolbar>
-      <v-card-text>
-        <v-form ref="registerForm" v-model="valid" lazy-validation>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field v-model="name" :rules="[rules.required]" label="Name" maxlength="20"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="mobile" :rules="mobileRules" label="Mobile"></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field v-model="email" :rules="emailRules" label="Email"></v-text-field>
-            </v-col>
-            <v-spacer></v-spacer>
-            <v-col class="d-flex ml-auto" cols="12" sm="3" xsm="12">
-              <v-btn x-large block color="primary" @click="validate">Register</v-btn>
-            </v-col>
-          </v-row>
-        </v-form>
-      </v-card-text>
-    </v-card>
+  <div>
+    <v-dialog v-model="registrationStore.isDialogOpen" transition="dialog-bottom-transition" scrollable>
+      <v-card flat>
+        <v-toolbar dark color="indigo">
+          <v-toolbar-title>Register for {{ event }}</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+          <v-form v-model="isFormValid">
+            <v-row>
+              <v-col cols="12">
+                <v-text-field v-model="name" outline :rules="[rules.required]" label="Name"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field v-model="phone" outline :rules="phoneRules" label="Phone Number"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field v-model="email" outline :rules="emailRules" label="Email" type="email"></v-text-field>
+              </v-col>
+              <v-spacer></v-spacer>
+              <v-col class="d-flex ml-auto" cols="12" md="4">
+                <v-btn x-large block size="large" color="indigo" @click.prevent="register">Register</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
+<script setup>
+import { useRegistrationStore } from "../../stores/registration";
+import { useUserStore } from "../../stores/user";
+const registrationStore = useRegistrationStore();
+const userStore = useUserStore();
+registrationStore.prepareMutation()
+</script>
+
 <script>
 export default {
-  name: 'registerevent',
+  name: 'register_for_event',
   props: {
-    event: String
+    event: String,
+    id: String,
   },
   methods: {
-    validate() {
-      this.$refs.registerForm.validate()
-      //   if (this.$refs.registerForm.validate()) {
-      //     // submit form to server/API here...
-      //   }
+    async register() {
+      let registration = {
+        name: this.name,
+        email: this.email,
+        phone: this.phone,
+        event: this.id,
+      };
+      if (this.userStore.id) {
+        registration.user = userStore.id;
+      }
+      await this.registrationStore.registerForEvent(registration)
+      this.registrationStore.closeDialog()
     },
   },
   data: () => ({
-    valid: true,
+    isFormValid: false,
     name: "",
-    mobile: "",
+    phone: "",
     email: "",
-    mobileRules: [
+    phoneRules: [
       v => !!v || "Required",
-      v => (v && !isNaN(parseFloat(v)) && v.length == 10) || "Mobile must be valid"
+      v => (v && !isNaN(parseFloat(v)) && v.length == 10) || "Phone Number must be valid"
     ],
     emailRules: [
       v => !!v || "Required",
       v => /.+@.+\..+/.test(v) || "E-mail must be valid"
     ],
     rules: {
-      required: value => !!value || "Required.",
-      min: v => (v && v.length >= 8) || "Min 8 characters"
+      required: value => !!value || "Required."
     }
   })
 }

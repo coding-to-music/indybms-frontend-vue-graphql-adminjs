@@ -47,10 +47,12 @@ export const useEventStore = defineStore({
           maxAllowedRegistrations
           status
           category {
+            id
             name
           }
           registrationFee
           owner {
+            id
             name
             email
             phone

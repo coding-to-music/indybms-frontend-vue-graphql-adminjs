@@ -41,7 +41,6 @@ export default {
     CategoryCard,
   },
   mounted() {
-    console.log(this.$route.params.categoryId);
     if (this.$route.params.categoryId && this.$route.params.categoryId != 'null' && this.$route.params.categoryId != 'undefined') {
       this.categoryStore.getCategoryEvents(this.$route.params.categoryId)
     } else {

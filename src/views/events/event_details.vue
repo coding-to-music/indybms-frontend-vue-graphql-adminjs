@@ -1,6 +1,6 @@
 <template>
-  <div class="mx-4 my-4">
-    <v-row v-if="eventStore.event">
+  <div v-if="eventStore.event" class="mx-4 my-4">
+    <v-row>
       <v-col cols="12" md="4">
         <v-img :src="eventStore.event.coverImage"></v-img>
       </v-col>
@@ -16,9 +16,20 @@
         <p class="text-body-1"> <strong>ID Required:</strong> {{ eventStore.event.ageRestriction ? 'Yes' : 'No' }}</p>
       </v-col>
       <v-col cols="12" md="2">
-        <v-btn color="indigo" variant="flat" size="large" to="#">
-          Register For Event
-        </v-btn>
+        <v-row>
+          <v-col cols="12">
+            <v-btn v-if="!isOwner" color="indigo" variant="flat" size="large"
+              @click.prevent="registrationStore.openDialog">
+              Register For Event
+            </v-btn>
+            <Register :id="eventStore.event.id" :event="eventStore.event.title" />
+          </v-col>
+          <v-col cols="12" v-if="isOwner">
+            <v-btn color="indigo" variant="flat" size="large" :to="('/events/' + eventStore.event.id + '/edit')">
+              Edit Event
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
     <br>
@@ -64,16 +75,27 @@
 
 <script setup>
 import { useEventStore } from "../../stores/event";
+import { useUserStore } from "../../stores/user";
+import { useRegistrationStore } from "../../stores/registration";
 const eventStore = useEventStore();
+const userStore = useUserStore();
+const registrationStore = useRegistrationStore();
+if (userStore.token) {
+  userStore.getUser(userStore.id)
+}
 </script>
 
 <script>
 import moment from 'moment';
+import Register from './register_for_event.vue'
 
 export default {
   name: 'event_details',
   mounted() {
     this.eventStore.getEvent(this.$route.params.id);
+  },
+  components: {
+    Register,
   },
   data() {
     return {
@@ -83,6 +105,15 @@ export default {
       ],
     }
   },
+  computed: {
+    isOwner() {
+      if (this.eventStore.event && this.userStore.id && this.eventStore.event.owner.id.normalize() === this.userStore.id.normalize()) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
 }
 </script>
 <style scoped>

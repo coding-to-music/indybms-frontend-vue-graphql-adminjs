@@ -32,20 +32,20 @@
               <v-text-field variant="outlined" v-model="location" label="Location"
                 :rules="[rules.required]"></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <!-- <v-col cols="12" sm="6" md="6">
               <v-file-input show-size chips label="Cover Image" v-model="coverImageFile"
                 :rules="[rules.required]"></v-file-input>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-file-input show-size chips multiple label="Gallery" v-model="galleryFiles"
                 :rules="[rules.required]"></v-file-input>
-            </v-col>
+            </v-col> -->
             <v-col cols="12" sm="6" md="6">
               <v-checkbox v-model="ageRestriction" label="ID Required"></v-checkbox>
             </v-col>
             <v-spacer></v-spacer>
             <v-col class="d-block ml-auto my-3" cols="12" sm="3" xsm="12">
-              <v-btn size="large" :disabled="!isFormValid" x-large block color="indigo" @click.prevent="editEvent">Add
+              <v-btn size="large" :disabled="!isFormValid" x-large block color="indigo" @click.prevent="editEvent">Edit
                 Event</v-btn>
             </v-col>
           </v-row>
@@ -58,15 +58,42 @@
 <script setup>
 import { useCategoryStore } from "../../stores/category";
 import { useEventStore } from "../../stores/event";
+import { useRoute } from "vue-router";
+const route = useRoute();
 const categoryStore = useCategoryStore();
 const eventStore = useEventStore();
 categoryStore.getAllCategories();
-eventStore.prepareEditMutation()
+eventStore.prepareEditMutation();
+eventStore.getEvent(route.params.id)
 </script>
 
 <script>
 export default {
   name: 'add_event',
+  mounted() {
+    if (this.eventStore.event && this.categoryStore.categories.length > 0) {
+      this.title = this.eventStore.event.title;
+      this.description = this.eventStore.event.description;
+      this.date = this.eventStore.event.date;
+      this.registrationFee = this.eventStore.event.registrationFee;
+      this.location = this.eventStore.event.location;
+      this.ageRestriction = this.eventStore.event.ageRestriction;
+      this.status = this.eventStore.event.status;
+      this.category = this.categoryStore.categories.find((c) => c.id === this.eventStore.event.category.id);
+    }
+  },
+  beforeUpdate() {
+    if (this.eventStore.event && this.categoryStore.categories.length > 0) {
+      this.title = this.eventStore.event.title;
+      this.description = this.eventStore.event.description;
+      this.date = this.eventStore.event.date;
+      this.registrationFee = this.eventStore.event.registrationFee;
+      this.location = this.eventStore.event.location;
+      this.ageRestriction = this.eventStore.event.ageRestriction;
+      this.status = this.eventStore.event.status;
+      this.category = this.categoryStore.categories.find((c) => c.id === this.eventStore.event.category.id);
+    }
+  },
   methods: {
     // async uploadCoverImage() {
     //   let formData = new FormData();
