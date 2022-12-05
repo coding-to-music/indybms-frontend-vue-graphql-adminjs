@@ -19,7 +19,7 @@ IndyBMS is an event booking and discovery application targeted at local audience
 
 ## Hosted Web App
 
-[IndyBMS - https://indybms.netlify.app](https://indybms.netlify.app/)
+[IndyBMS - https://indybms.ryandsilva.dev](https://indybms.ryandsilva.dev)
 
 ## Pre-Requisites
 
