@@ -31,7 +31,7 @@ import SearchBar from '../components/search_bar.vue'
 import CategoryCard from '../components/category_card.vue'
 
 export default {
-  name: 'home',
+  name: 'category_list',
   props: {
     searchTerm: String,
     default: ''
