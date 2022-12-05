@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import index from "../views/index.vue";
 import my_events from "../views/user/my_events.vue";
-import login from "../views/login.vue";
+import login from "../views/Login.vue";
 import register from "../views/register.vue";
 import search_list from "../views/search_list.vue";
 import category_list from "../views/category_list.vue";
