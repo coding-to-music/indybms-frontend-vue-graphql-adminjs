@@ -45,16 +45,16 @@ export default {
   data: () => ({
     events: [
       {
-        src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2969&q=80',
+        src: 'https://indybms-uploads.s3.us-east-1.amazonaws.com/1670305635778-s2.jpg',
       },
       {
-        src: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80',
+        src: 'https://indybms-uploads.s3.us-east-1.amazonaws.com/1670305635778-s3.jpg',
       },
       {
-        src: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+        src: 'https://indybms-uploads.s3.us-east-1.amazonaws.com/1670305635775-s1.jpg',
       },
       {
-        src: 'https://images.unsplash.com/photo-1561489396-888724a1543d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2970&q=80',
+        src: 'https://indybms-uploads.s3.us-east-1.amazonaws.com/1670305635809-s4.jpg',
       },
     ],
   }),
