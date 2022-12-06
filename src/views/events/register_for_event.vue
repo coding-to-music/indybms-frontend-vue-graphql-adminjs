@@ -53,7 +53,7 @@ export default {
         event: this.id,
       };
       if (this.userStore.id) {
-        registration.user = userStore.id;
+        registration.user = this.userStore.id;
       }
       await this.registrationStore.registerForEvent(registration)
       this.registrationStore.closeDialog()
