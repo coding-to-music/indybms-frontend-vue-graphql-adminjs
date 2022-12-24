@@ -1,10 +1,11 @@
 {
-  "name": "indybms-frontend",
+  "name": "indybms-frontend-vue-graphql-adminjs",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "git add . && git commit -m Build && git push",
     "preview": "vite preview"
   },
   "dependencies": {

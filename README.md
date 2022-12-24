@@ -1,3 +1,39 @@
+# indybms-frontend-vue-graphql-adminjs
+
+# 🚀 Frontend of Event Management Application built with Node.js 🚀
+
+https://github.com/coding-to-music/indybms-frontend-vue-graphql-adminjs
+
+https://indybms-frontend-vue-graphql-adminjs.vercel.app
+
+See also:
+
+https://github.com/coding-to-music/indybms-adminjs-mongo-graphql-s3
+
+https://indybms-adminjs-mongo-graphql-s3.vercel.app (backend API and AdminJS)
+
+From / By https://github.com/RyanDsilva/indybms-backend
+
+https://github.com/RyanDsilva/indybms-frontend
+
+## Environment variables:
+
+```java
+VITE_BACKEND_URL = https://api.indybms-adminjs-mongo-graphql-s3.vercel.app
+```
+
+## GitHub
+
+```java
+git init
+git add .
+git remote remove origin
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:coding-to-music/indybms-frontend-vue-graphql-adminjs.git
+git push -u origin main
+```
+
 # IndyBMS Frontend
 
 Made using [Vue 3](https://vuejs.org/) and [Vuetify](https://next.vuetifyjs.com/en/components/all/)
