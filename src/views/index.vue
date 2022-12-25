@@ -66,16 +66,16 @@
     data: () => ({
       events: [
         {
-          src: "https://indybms-adminjs-mongo-graphql-s3.s3.us-east-1.amazonaws.com/1670305635778-s2.jpg",
+          src: "https://my-site-images-test.s3.us-east-1.amazonaws.com/1647749488819.jpeg",
         },
         {
-          src: "https://indybms-adminjs-mongo-graphql-s3.s3.us-east-1.amazonaws.com/1670305635778-s3.jpg",
+          src: "https://my-site-images-test.s3.us-east-1.amazonaws.com/1647749692739.jpg",
         },
         {
-          src: "https://indybms-adminjs-mongo-graphql-s3.s3.us-east-1.amazonaws.com/1670305635775-s1.jpg",
+          src: "https://my-site-images-test.s3.us-east-1.amazonaws.com/1647750384115-1.jpeg",
         },
         {
-          src: "https://indybms-adminjs-mongo-graphql-s3.s3.us-east-1.amazonaws.com/1670305635809-s4.jpg",
+          src: "https://my-site-images-test.s3.us-east-1.amazonaws.com/1647750384115.jpeg",
         },
       ],
     }),
